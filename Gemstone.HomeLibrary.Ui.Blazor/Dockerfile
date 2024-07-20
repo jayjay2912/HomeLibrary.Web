@@ -1,7 +1,6 @@
 ﻿FROM --platform=$BUILDPLATFORM nginx:alpine AS base
 WORKDIR /app
 EXPOSE 8080
-COPY ["Gemstone.HomeLibrary.Ui.Blazor/nginx.conf", "/etc/nginx/nginx.conf"]
 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -19,3 +18,4 @@ RUN dotnet publish "Gemstone.HomeLibrary.Ui.Blazor.csproj" -c $BUILD_CONFIGURATI
 
 FROM base AS final
 COPY --from=publish /app/publish .
+COPY ["Gemstone.HomeLibrary.Ui.Blazor/nginx.conf", "/etc/nginx/nginx.conf"]
