@@ -4,11 +4,12 @@ using Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 
 namespace Gemstone.HomeLibrary.Ui.Blazor.Services;
 
-public class HomeLibraryApiService : IHomeLibraryApiService
+public class HomeLibraryApiService(IConfiguration configuration) : IHomeLibraryApiService
 {
     public async Task<IEnumerable<Book>> GetLibrary()
     {
-        const string url = "http://localhost:5000/library";
+        var baseUrl = configuration.GetValue<string>("apiUrl");
+        var url = $"{baseUrl}/library";
 
         using var client = new HttpClient();
 
@@ -24,7 +25,8 @@ public class HomeLibraryApiService : IHomeLibraryApiService
 
     public async Task<Book> GetBook(Guid bookId)
     {
-        var url = $"http://localhost:5000/library/books/{bookId.ToString()}";
+        var baseUrl = configuration.GetValue<string>("apiUrl");
+        var url = $"{baseUrl}/library/books/{bookId.ToString()}";
 
         using var client = new HttpClient();
 
@@ -40,7 +42,8 @@ public class HomeLibraryApiService : IHomeLibraryApiService
 
     public async Task<bool> AddBookByIsbn(string isbn)
     {
-        var url = $"http://localhost:5000/library/books/isbn/{isbn}";
+        var baseUrl = configuration.GetValue<string>("apiUrl");
+        var url = $"{baseUrl}/library/books/isbn/{isbn}";
 
         using var client = new HttpClient();
 
