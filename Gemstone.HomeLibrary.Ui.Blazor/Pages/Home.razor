@@ -1,0 +1,34 @@
+﻿@page "/"
+@using BlazorBootstrap
+@using Gemstone.HomeLibrary.Shared.Models.HomeLibrary
+@using Gemstone.HomeLibrary.Ui.Blazor.Services
+@inject IHomeLibraryApiService ApiService
+
+<PageTitle>Library</PageTitle>
+
+@if (_books == null)
+{
+    <Spinner/>
+}
+else
+{
+    @foreach (var book in _books)
+    {
+        var href = $"view-book/{book.Id}";
+        <div>
+            @book.Title
+            <NavLink class="nav-link" href="@href">
+                View
+            </NavLink>
+        </div>
+    }
+}
+
+@code {
+    private List<Book>? _books;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _books = (await ApiService.GetLibrary()).ToList();
+    }
+}

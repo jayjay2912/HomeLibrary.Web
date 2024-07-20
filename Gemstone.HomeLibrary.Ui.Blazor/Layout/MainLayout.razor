@@ -1,0 +1,32 @@
+﻿@using BlazorBootstrap
+@inherits LayoutComponentBase
+<div class="page">
+    <main>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <div class="navbar-collapse show" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto float-start">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="/">
+                                <Icon Name="IconName.Book"/> Home
+                            </NavLink>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav float-end" style="margin-top: -5px;">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="add-book">
+                                <Tooltip Title="Add a book" role="button">
+                                    <Icon Name="IconName.BookmarkPlus" Class="large-icon" />
+                                </Tooltip>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

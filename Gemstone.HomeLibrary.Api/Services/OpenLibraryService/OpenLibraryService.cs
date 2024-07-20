@@ -133,7 +133,7 @@ public class OpenLibraryService(IServiceProvider serviceProvider, ILogger<IOpenL
         logger.LogInformation("Fetching author by key {AuthorKey}", authorKey);
 
         var openLibraryAuthor = await client.GetFromJsonAsync<OpenLibraryAuthor>(
-            $"https://openlibrary.org/{authorKey}.json",
+            $"https://openlibrary.org{authorKey}.json",
             new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
         return openLibraryAuthor;

@@ -1,0 +1,57 @@
+﻿@page "/add-book"
+@using BlazorBootstrap
+@using Gemstone.HomeLibrary.Ui.Blazor.Services
+@inject IHomeLibraryApiService ApiService
+
+<PageTitle>Add</PageTitle>
+
+<h3>Add</h3>
+
+@if (IsBookAdded)
+{
+    <Alert Color="AlertColor.Success">Book added!</Alert>
+}
+
+@if (IsError)
+{
+    <Alert Color="AlertColor.Danger">Failed to find or add a book with that ISBN</Alert>
+}
+
+<form name="add-book-form" @onsubmit="Submit">
+    <div class="mb-3 row">
+        <label for="inputIsbn" class="col-sm-2 col-form-label">ISBN</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="inputIsbn" required="required" @bind-value="Isbn">
+        </div>
+    </div>
+
+    <Button Type="ButtonType.Submit" Color="ButtonColor.Primary" Loading="@IsLoading" LoadingText="Adding..." Disabled="@IsLoading"> Add </Button>
+</form>
+
+@code {
+
+    [SupplyParameterFromForm]
+    private string? Isbn { get; set; }
+
+    private bool IsError { get; set; }
+    private bool IsBookAdded { get; set; }
+    private bool IsLoading { get; set; }
+
+    private async Task Submit()
+    {
+        IsError = false;
+        IsBookAdded = false;
+
+        if (Isbn == null)
+        {
+            return;
+        }
+
+        IsLoading = true;
+
+        IsBookAdded = await ApiService.AddBookByIsbn(Isbn);
+        IsError = !IsBookAdded;
+
+        IsLoading = false;
+    }
+}

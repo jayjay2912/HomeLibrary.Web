@@ -1,0 +1,51 @@
+﻿@page "/view-book/{bookId}"
+@using BlazorBootstrap
+@using Gemstone.HomeLibrary.Shared.Models.HomeLibrary
+@using Gemstone.HomeLibrary.Ui.Blazor.Services
+@inject IHomeLibraryApiService ApiService
+
+<PageTitle>View</PageTitle>
+
+<h1>View</h1>
+
+<NavLink class="nav-link" href="/">
+    <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Back
+</NavLink>
+
+@if (_book == null)
+{
+    <Spinner/>
+}
+else
+{
+    <div>@_book.Id</div>
+    <div>@_book.Title</div>
+    <div>@_book.SubTitle</div>
+    <div>@_book.Authors?.FirstOrDefault()?.Name</div>
+    <div>@_book.Isbn10</div>
+    <div>@_book.Isbn13</div>
+    <div>@_book.Pages</div>
+    <div>@_book.Publishers?.FirstOrDefault()?.Name</div>
+    <div>@_book.PublishDate</div>
+    <div>@_book.AddedAt</div>
+    <div>@_book.OpenLibraryKey</div>
+}
+
+@code {
+
+    [Parameter]
+    public string? BookId { get; set; }
+
+    private Book? _book;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (BookId == null)
+        {
+            return;
+        }
+
+        var bookGuid = Guid.Parse(BookId);
+        _book = await ApiService.GetBook(bookGuid);
+    }
+}

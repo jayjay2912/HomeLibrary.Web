@@ -58,7 +58,11 @@ public class HomeLibraryService(IServiceProvider serviceProvider, ILogger<HomeLi
     /// <returns>The <see cref="Book" /> or null</returns>
     public async Task<Book> GetBookById(Guid bookId)
     {
-        var book = await _db.Books.Where(b => b.Id.Equals(bookId)).FirstOrDefaultAsync();
+        var book = await _db.Books
+            .Where(b => b.Id.Equals(bookId))
+            .Include(b => b.Authors)
+            .Include(b => b.Publishers)
+            .FirstOrDefaultAsync();
         if (book == null)
         {
             throw new ArgumentException($"Unknown book id {bookId}");
