@@ -1,7 +1,7 @@
 using Gemstone.HomeLibrary.Api.Models;
-using Gemstone.HomeLibrary.Api.Models.HomeLibrary;
 using Gemstone.HomeLibrary.Api.Services.HomeLibraryService;
 using Gemstone.HomeLibrary.Api.Services.OpenLibraryService;
+using Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gemstone.HomeLibrary.Api.Controllers;
@@ -39,17 +39,21 @@ public class BooksController(IServiceProvider serviceProvider) : ControllerBase
     {
         var existingBook = await _homeLibraryService.TryGetBookByIsbn(isbn);
         if (existingBook != null)
+        {
             return Conflict(new GenericResponse
             {
-                Message = $"ISBN {isbn} already exists with against book {existingBook.Id}"
+                Message = $"ISBN {isbn} already exists against book {existingBook.Id}"
             });
+        }
 
         var book = await _openLibraryService.TryGetBookByIsbn(isbn);
         if (book == null)
+        {
             return NotFound(new GenericResponse
             {
                 Message = $"Could not find book with ISBN: {isbn}"
             });
+        }
 
         await _homeLibraryService.AddBook(book);
 
@@ -69,10 +73,12 @@ public class BooksController(IServiceProvider serviceProvider) : ControllerBase
     {
         var existingBook = await _homeLibraryService.TryGetBookByIsbn(book.Isbn10 ?? book.Isbn13);
         if (existingBook != null)
+        {
             return Conflict(new GenericResponse
             {
                 Message = $"Book already exists as {existingBook.Id} with ISBN {book.Isbn10 ?? book.Isbn13}"
             });
+        }
 
         await _homeLibraryService.AddBook(book);
 

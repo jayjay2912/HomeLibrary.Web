@@ -1,4 +1,4 @@
-using Gemstone.HomeLibrary.Api.Models.HomeLibrary;
+using Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gemstone.HomeLibrary.Api.DbContext;

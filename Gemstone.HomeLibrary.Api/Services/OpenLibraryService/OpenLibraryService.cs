@@ -1,6 +1,6 @@
 using System.Text.Json;
-using Gemstone.HomeLibrary.Api.Models.HomeLibrary;
 using Gemstone.HomeLibrary.Api.Models.OpenLibrary;
+using Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 
 namespace Gemstone.HomeLibrary.Api.Services.OpenLibraryService;
 
@@ -83,12 +83,14 @@ public class OpenLibraryService(IServiceProvider serviceProvider, ILogger<IOpenL
         var results = await Task.WhenAll(tasks);
 
         foreach (var openLibraryAuthor in results)
+        {
             authors.Add(new Author
             {
                 Name = openLibraryAuthor?.Name ?? string.Empty,
                 PersonalName = openLibraryAuthor?.PersonalName ?? string.Empty,
                 OpenLibraryKey = openLibraryAuthor?.Key ?? string.Empty
             });
+        }
 
         return authors;
     }

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Gemstone.HomeLibrary.Api.Models.HomeLibrary;
+namespace Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 
 /// <summary>
 ///     A <see cref="Book" />. The reason we're here.

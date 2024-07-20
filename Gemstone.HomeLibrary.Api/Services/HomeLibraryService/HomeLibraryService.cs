@@ -1,5 +1,5 @@
 using Gemstone.HomeLibrary.Api.DbContext;
-using Gemstone.HomeLibrary.Api.Models.HomeLibrary;
+using Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gemstone.HomeLibrary.Api.Services.HomeLibraryService;
@@ -59,7 +59,10 @@ public class HomeLibraryService(IServiceProvider serviceProvider, ILogger<HomeLi
     public async Task<Book> GetBookById(Guid bookId)
     {
         var book = await _db.Books.Where(b => b.Id.Equals(bookId)).FirstOrDefaultAsync();
-        if (book == null) throw new ArgumentException($"Unknown book id {bookId}");
+        if (book == null)
+        {
+            throw new ArgumentException($"Unknown book id {bookId}");
+        }
         return book;
     }
 
@@ -71,7 +74,10 @@ public class HomeLibraryService(IServiceProvider serviceProvider, ILogger<HomeLi
     public async Task<User> GetUserById(Guid userId)
     {
         var user = await _db.Users.Where(u => u.Id.Equals(userId)).FirstOrDefaultAsync();
-        if (user == null) throw new ArgumentException($"Unknown user id {userId}");
+        if (user == null)
+        {
+            throw new ArgumentException($"Unknown user id {userId}");
+        }
         return user;
     }
 
@@ -83,7 +89,7 @@ public class HomeLibraryService(IServiceProvider serviceProvider, ILogger<HomeLi
     public async Task<Book?> TryGetBookByIsbn(string isbn)
     {
         var existingBook = await _db.Books
-            .Where(b => (b.Isbn10 != null && b.Isbn10.Equals(isbn)) || (b.Isbn13 != null && b.Isbn13.Equals(isbn)))
+            .Where(b => b.Isbn10 != null && b.Isbn10.Equals(isbn) || b.Isbn13 != null && b.Isbn13.Equals(isbn))
             .ToListAsync();
 
         return existingBook.FirstOrDefault();

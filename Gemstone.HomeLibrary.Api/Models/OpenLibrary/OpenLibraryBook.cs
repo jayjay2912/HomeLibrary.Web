@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 
 namespace Gemstone.HomeLibrary.Api.Models.OpenLibrary;
 
@@ -6,7 +7,7 @@ namespace Gemstone.HomeLibrary.Api.Models.OpenLibrary;
 ///     An <see cref="OpenLibraryBook" /> record as reported on the
 ///     <see cref="Gemstone.HomeLibrary.Api.Services.OpenLibraryService.OpenLibraryService" />
 /// </summary>
-/// <remarks>Transformed in to a standard <see cref="Models.HomeLibrary.Book" /> record before use</remarks>
+/// <remarks>Transformed in to a standard <see cref="Book" /> record before use</remarks>
 public class OpenLibraryBook
 {
     /// <summary>

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Gemstone.HomeLibrary.Api.Models.HomeLibrary;
+namespace Gemstone.HomeLibrary.Shared.Models.HomeLibrary;
 
 /// <summary>
 ///     A <see cref="User" />
